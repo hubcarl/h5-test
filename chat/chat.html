@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html ng-app="chat">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>在线聊天</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="css/chat.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/angular-sanitize.js"></script>
+    <script type="text/javascript" src="js/ngChat.js"></script>
+</head>
+<body >
+<div class="content" ng-controller="chatController">
+    <div class="chatBox" ng-keydown="enterEvent($event)">
+        <div class="chatLeft">
+            <div class="chat">
+                <div class="chat01_title">
+                    <ul class="talkTo">
+                        <li><a>{{special&&normal ? special+'&'+normal:''}}</a></li>
+                        <li style="float: right;padding-right: 32px; cursor: pointer">
+                            <span style="color: #f60">{{isReqTip}}</span>
+                            <a><input ng-click="mark()" type="button" style="width: 80px;text-align: center;padding-top: 2px;padding-bottom: 2px" value="{{isMark ? '取消标记':'标记'}}" /></a>
+                            <a><input ng-click="refresh()" type="button" style="width: 100px;text-align: center;padding-top: 2px;padding-bottom: 2px" value="刷  新" /></a>
+                        </li>
+                    </ul>
+                    <a class="close_btn" ng-click="close()" ></a>
+                </div>
+                <div id="chatDiv" class="chat01_content">
+                    <div ng-if="!chatMsgList.length&&loadFailed" class="chat01_history" ng-click="refresh()" ><span>加载失败,请点击重试!</span></div>
+                    <div ng-if="hasNextPage" class="chat01_history loading-more"  ng-click="loadChatMessage()"><img ng-show="isLoading" src="images/loading.gif"><span>  点击此处查看消息历史</span></div>
+                    <div ng-if="chatMsgList.length>0&&!hasNextPage" class="chat01_history loading-more"><span>消息已全部加载完成,没有更多消息了</span></div>
+                    <div class="message_box">
+                        <div class="message clearfix" ng-repeat="item in chatMsgList">
+                            <div><img class="user-logo" ng-src="{{item.optType==0 ? item.specialIcon:item.normalIcon}}"></div>
+                            <div class="wrap-text"><h5 class="clearfix">{{item.optType==0 ? item.specialName:item.normalName}}&nbsp;&nbsp;<date class="date">{{item.sendTime|date : 'yyyy-MM-dd hh:mm:ss'}}</date></h5>
+                                <div ng-switch="item.contentType">
+                                    <div ng-switch-when="1" ng-bind-html="item.content"></div>
+                                    <div ng-switch-when="2">
+                                        <a href="{{item.content|contentUrlFormat}}" target="_blank">语音[点击下载]</a>
+                                    </div>
+                                    <div ng-switch-when="3">
+                                        <a href="{{item.content|contentUrlFormat}}" target="_blank"><img ng-src="{{item.content|contentThumbFormat}}" /></a>
+                                    </div>
+                                    <div ng-switch-when="9">
+                                        <div>{{item.title}}</div>
+                                        <div ng-bind-html="item.summary"></div>
+                                        <a href="{{item.content|contentUrlFormat}}" target="_blank"><img ng-src="{{item.content|contentThumbFormat}}" /></a>
+                                    </div>
+                                    <div ng-switch-default ng-bind-html="item.content"></div>
+                                </div>
+                            </div>
+                            <div style="clear:both;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat02">
+                <div class="chat02_title">
+                    <label class="chat02_title_t"> <a target="_blank">{{tipMsg}}</a></label>
+                </div>
+                <div class="chat02_content">
+                    <textarea id="textarea" ng-model="chat.inputMsg"></textarea>
+                </div>
+                <div class="chat02_bar">
+                    <div class="chat_bottom">
+                        <div id="bind-html-with-sanitize" style="float: left;width:460px;padding-top: 4px">
+                            <select ng-model="chat.customMsg" style="margin-left: 20px;height: 26px;max-width: 400px">
+                                <option value="">--请选择快速回复内容--</option>
+                                <option ng-repeat="item in customMsgList" value="{{item.replyContent}}">{{item.replyContent}}</option>
+                            </select>
+                        </div>
+                        <div style="float: right;width:100px;padding-top: 4px">
+                            <img src="images/send_btn.jpg" ng-click="sendMsg()"></a>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chatRight" style="display: none">
+            <div class="chat03">
+                <div class="chat03_title">
+                    <label class="chat03_title_t">
+                        成员列表</label>
+                </div>
+                <div class="chat03_content">
+                    <ul>
+                        <li>
+                            <label class="online">
+                            </label>
+                            <a href="javascript:;">
+                                <img src="images/logo.png"></a><a href="javascript:;" class="chat03_name">1111</a>
+                        </li>
+                        <li>
+                            <label class="offline">
+                            </label>
+                            <a href="javascript:;">
+                                <img src="images/logo.png"></a><a href="javascript:;" class="chat03_name">2222</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;">
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

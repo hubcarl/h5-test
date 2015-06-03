@@ -1,0 +1,189 @@
+body {
+    font-size: 14px;
+}
+
+.header {
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header:before {
+    content: '['
+}
+
+.header:after {
+    content: ']'
+}
+
+.inline {
+    margin: 10px auto;
+    display: -webkit-box
+}
+
+.inline a {
+    -webkit-box-flex: 1;
+    display: block;
+    text-align: center;
+    background-color: #5bc0de;
+    height: 40px;
+    line-height: 40px;
+    color: white;
+}
+
+.inline a:after {
+    content: "|";
+    float: right;
+}
+
+.inline a:last-child:after {
+    content: "";
+}
+
+.inline a:hover {
+    background-color: #0480be;
+}
+
+.inline a:hover:after {
+    content: "";
+    background-color: #0480be;
+}
+
+.menu {
+    margin: 10px auto;
+    display: -webkit-box
+}
+
+.menu a {
+    -webkit-box-flex: 1;
+    display: block;
+    text-align: center;
+    background-color: #5bc0de;
+    height: 40px;
+    line-height: 40px;
+    color: white;
+}
+
+.menu a:hover {
+    background-color: #0480be;
+}
+
+.menu .line {
+    color: white;
+    background-color: #5bc0de;
+    height: 40px;
+    line-height: 40px;
+}
+
+.abs .top {
+    margin-top: 10px;
+    background-color: #0480be;
+    height: 40px;
+    line-height: 40px;
+}
+
+.abs .center {
+    background-color: white;
+    height: 1px;
+}
+
+.abs .bottom {
+    background-color: #5bc0de;
+    height: 40px;
+    line-height: 40px;
+}
+
+.abs .icon {
+    width: 81px;
+    height: 81px;
+    background-color: red;
+    margin-top: -81px;
+}
+
+/*绝对定位的元素的位置相对于最近的已定位祖先元素，如果元素没有已定位的祖先元素，那么它的位置相对于最初的包含块
+只要父级元素设了position并且不是static（默认既是static），那么设定了absolute的子元素即以此为包含块（最近的）。*/
+.abs-true {
+    position: relative;
+    width: 100%;
+}
+
+.abs .abs-icon {
+    position: absolute;
+    width: 81px;
+    height: 81px;
+    background-color: red;
+    top: 0px;
+    left: 0;
+}
+
+.ul-li-hor{
+    width: 100%;
+    display: table;
+    list-style-type: none;
+    margin: 10px 0px 0px 0px;
+    padding: 0px;
+}
+
+.ul-li-hor li{
+    display:table-cell;
+    list-style-type: none;
+    background-color: #0480be;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-right: 1px solid #cecece;
+}
+
+.ul-li-hor li:hover{
+    background-color: #5bc0de;
+    color: white;
+}
+
+
+
+.ul-li-hor-flex{
+    width: 100%;
+    display: -webkit-box;
+    list-style-type: none;
+    margin: 10px 0px 0px 0px;
+    padding: 0px;
+}
+
+.ul-li-hor-flex li{
+    -webkit-box-flex: 1;
+    list-style-type: none;
+    background-color: #0480be;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-right: 1px solid #cecece;
+}
+
+.ul-li-hor-flex li:hover{
+    background-color: #5bc0de;
+    color: white;
+}
+
+
+.ul-li-ver{
+    width: 100px;
+    list-style-type: none;
+    margin: 10px 0px 0px 0px;
+    padding: 0px;
+}
+
+.ul-li-ver li{
+    background-color: #0480be;
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.ul-li-ver li:hover{
+    background-color: #5bc0de;
+    color: white;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="test">
+        <p>{{message}}</p>
+        <p>{{message.split('').reverse().join('&')}}</p>
+        <input type="text" v-model="message">
+
+        <ul id="tags">
+            <li v-repeat="tags">
+                {{$value}}
+            </li>
+        </ul>
+
+        <ul id="users">
+            <!-- think of this as "for each user in users" -->
+            <li v-repeat="user: users">
+                {{user.name}} - {{user.email}}- {{user.mobile}}
+            </li>
+        </ul>
+        <ul id="repeat-object">
+            <li v-repeat="primitiveValues">{{$key}} : {{$value}}</li>
+        </ul>
+
+        <a v-on="click: onClick">Trigger a handler</a>
+        <a v-on="click: n++">Trigger an expression</a>
+    </div>
+
+</body>
+<script>
+
+    var test = new Vue({
+        el: '#test',
+        data: {
+            message: 'Hello Vue.js!',
+            tags: ['JavaScript', 'MVVM', 'Vue.js'],
+            users: [
+                { name: 'Foo Bar', email: 'foo@bar.com' },
+                { name: 'John Doh', email: 'john@doh.com' }
+            ],
+            primitiveValues: {
+                FirstName: 'John',
+                LastName: 'Doe',
+                Age: 30
+            }
+        },
+        methods: {
+            onClick: function (e) {
+                console.log(e.target.tagName) // "A"
+                console.log(e.targetVM === this) // true
+            }
+        }
+    });
+    //返回的 test 这个 ViewModel 对象会自动代理 data 上的属性。
+    console.log(test.message);
+
+    test.message = "test";
+
+    //在内部，Vue.js截获一个观察数组的修改方法（unshift(), splice(), sort() 和reverse()），因此它们也将触发视图更新
+    test.tags.reverse();
+
+    //Vue.js 给观察数组添加了两个便捷方法：$set() 和 $remove() 。你应该避免直接通过索引来设置数据绑定数组中的元素，因为这些改变将不能被Vue.js检出，而应该使用增加的 $set() 方法:
+    test.users.$set(0, { name: 'sky', email: 'sky@126.com' });
+
+    test.users = test.users.filter(function (item) {
+        return item.name.match(/sky/)
+    });
+
+    //在ECMAScript 5中，当一个新属性添加到对象中时，或者从对象中删除一个属性时，没有办法检测到。要解决这个问题，观察对象将被添加两个方法：$add(key, value) 和 $delete(key)。这些方法可以被用于在添加、删除观察对象的属性时触发期望的视图更新。
+    test.users = test.users.filter(function (item) {
+        item.$add("mobile", "1342201567");
+        return item;
+    });
+</script>
+</html>

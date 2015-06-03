@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.slider.js"></script>
+    <style>
+        .r_jdt {
+            width: 722px;
+            height: 250px;
+            overflow: hidden;
+            border: #97d0ea 1px solid;
+        }
+        .m-slide {
+            position: relative;
+            width: 724px;
+            height: 250px;
+        }
+        .m-slide .img {
+            float: left;
+            position: relative;
+        }
+        ul {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .m-slide .img li {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .m-slide .img li, .m-slide .img a, .m-slide .img img {
+            display: block;
+            width: 581px;
+            height: 250px;
+        }
+
+        a:link, a:visited {
+            color: #666666;
+            text-decoration: none;
+            outline: none;
+        }
+        a:link, a:visited {
+            color: #666666;
+            text-decoration: none;
+            outline: none;
+        }
+        a {
+            outline: none;
+        }
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        .m-slide .tab {
+            position: absolute;
+            left: 581px;
+        }
+        .m-slide .tab li {
+            width: 140px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 14px;
+            display: inline;
+        }
+
+        .m-slide .tab .on a {
+            background: url(images/nav_bg_hover.gif) no-repeat;
+            width: 156px;
+            height: 50px;
+            left: -15px;
+        }
+        .m-slide .tab a {
+            display: block;
+            position: relative;
+            width: 140px;
+            height: 50px;
+        }
+        a:hover, a:active {
+            color: #ff6c00;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        a:link, a:visited {
+            color: #666666;
+            text-decoration: none;
+            outline: none;
+        }
+        .m-slide .tab a .title {
+            left: 17px;
+            color: #0f8dc4;
+        }
+        .m-slide .tab a span {
+            position: absolute;
+            overflow: hidden;
+        }
+        .m-slide .tab .on a span {
+            color: #fff;
+            padding-left: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="r_jdt">
+    <div class="m-slide">
+        <ul class="img" style="position: relative; width: 581px; height: 250px;">
+            <li style="position: absolute; width: 581px; left: 0px; top: 0px; display: none;"><a
+                    href="http://youxihe.49you.com/" target="_blank"><img
+                    src="http://img.49you.com/20140910/540fa5799e74e.jpg"></a></li>
+            <li style="position: absolute; width: 581px; left: 0px; top: 0px; display: none;"><a
+                    href="http://mycs.49you.com/xinwen/95279.html" target="_blank"><img
+                    src="http://img.49you.com/20140911/5410f91615d3b.jpg"></a></li>
+            <li style="position: absolute; width: 581px; left: 0px; top: 0px; display: none;"><a
+                    href="http://mlj.49you.com/server_list.html" target="_blank"><img
+                    src="http://img.49you.com/20140506/536855633fb89.jpg"></a></li>
+            <li style="position: absolute; width: 581px; left: 0px; top: 0px; display: list-item;"><a
+                    href="http://rxsc.49you.com/server_list.html" target="_blank"><img
+                    src="http://img.49you.com/20140619/53a27f5b49f5a.jpg"></a></li>
+            <li style="position: absolute; width: 581px; left: 0px; top: 0px; display: none;"><a
+                    href="http://shop.49you.com/" target="_blank"><img
+                    src="http://img.49you.com/20140825/53faef383e278.jpg"></a></li>
+        </ul>
+        <ul class="tab">
+            <li class=""><a href="http://youxihe.49you.com/" target="_blank"><span class="title">49极速游戏盒</span></a></li>
+            <li class=""><a href="http://mycs.49you.com/xinwen/95279.html" target="_blank"><span class="title">魅影传说</span></a></li>
+            <li class=""><a href="http://mlj.49you.com/server_list.html" target="_blank"><span class="title">魔龙诀</span></a></li>
+            <li class="on"><a href="http://rxsc.49you.com/server_list.html" target="_blank"><span class="title">热血沙城</span></a></li>
+            <li class=""><a href="http://shop.49you.com/" target="_blank"><span class="title">全新积分商城</span></a></li>
+        </ul>
+    </div>
+    <script type="text/javascript">jQuery(".m-slide").slide({ titCell:".tab li", mainCell:".img",effect:"fold", autoPlay:true});</script>
+</div>
+</body>
+</html>

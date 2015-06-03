@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="chat">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>在线聊天</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="css/chat.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/angular-sanitize.js"></script>
+    <script type="text/javascript" src="js/ngChat.js"></script>
+</head>
+<body >
+<div class="content" ng-controller="chatController">
+
+</div>
+
+<script>
+var app = angular.module('chat', ['ngSanitize']);
+
+app.filter('stringFormat', function () {
+    return function (str) {
+        return str;
+    }
+});
+
+// 默认是json格式
+//app.config(function($httpProvider) {
+//  $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
+//});
+
+app.controller('chatController', ['$scope', '$timeout', '$http', function ($scope, $timeout, $http) {
+
+    $scope.request = function (url, params, callback) {
+        var serverUrl = "http://codestudy.sinaapp.com" + url;
+        $http.post(serverUrl, params, {headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+            transformRequest: function (data) {
+                return $.param(data);
+            }
+        }).success(function (response, status, headers, config) {
+            console.log('>>>request success[' + serverUrl + ']:', response);
+            callback(response.success, response.data);
+        }).error(function (response, status, headers, config) {
+            console.log('>>>request failed[' + serverUrl + ']:', response);
+            callback(false, response.data);
+        });
+    }
+
+
+
+
+    //加载自定义消息列表
+    $scope.ajaxRequest = function () {
+        $scope.request('/api/manage/file/list.php', {}, function (isSuccess, data) {
+           console.log(data);
+        });
+    }
+
+    $scope.ajaxRequest();
+
+}]);
+
+</script>
+</body>
+</html>

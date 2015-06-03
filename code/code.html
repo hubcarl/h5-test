@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0033)http://tool.oschina.net/highlight -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>在线代码着色高亮http://tool.oschina.net/highlight</title>
+    <link rel="stylesheet" href="style/css/basic.css" type="text/css">
+    <link rel="stylesheet" href="style/css/bootstrap.min.css">
+    <link id="css" rel="stylesheet" type="text/css" href="style/css/shCoreFadeToGrey.css">
+    <script src="style/js/jquery-1.7.2.js"></script>
+    <script src="style/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="style/js/shCore.js"></script>
+    <script type="text/javascript" src="style/js/shBrushAll.js"></script>
+</head>
+<body>
+
+
+<script>
+    var cookieOptions = {
+        hoursToLive: 30 * 24
+    }
+    var REGX_HTML_ENCODE = /"|&|'|<|>|[\x00-\x20]|[\x7F-\xFF]|[\u0100-\u2700]/g;
+    function encodeHtml(s) {
+        return (typeof s != "string") ? s :
+                s.replace(REGX_HTML_ENCODE,
+                        function ($0) {
+                            var c = $0.charCodeAt(0), r = ["&#"];
+                            c = (c == 0x20) ? 0xA0 : c;
+                            r.push(c);
+                            r.push(";");
+                            return r.join("");
+                        });
+    }
+    function change(type) {    //更改样式
+        var css = document.getElementById("css");
+        if ("default" == type)
+            css.setAttribute("href", "style/css/code/shCoreDefault.css");
+        if ("emacs" == type)
+            css.setAttribute("href", "style/css/code/shCoreEmacs.css");
+        if ("django" == type)
+            css.setAttribute("href", "style/css/code/shCoreDjango.css");
+        if ("eclipse" == type)
+            css.setAttribute("href", "style/css/code/shCoreEclipse.css");
+        if ("fadetogrey" == type)
+            css.setAttribute("href", "style/css/code/shCoreFadeToGrey.css");
+        if ("mdultra" == type)
+            css.setAttribute("href", "style/css/code/shCoreMDUltra.css");
+        if ("midnight" == type)
+            css.setAttribute("href", "style/css/code/shCoreMidnight.css");
+        if ("rdark" == type)
+            css.setAttribute("href", "style/css/code/shCoreRDark.css");
+        render();
+    }
+
+    $(document).ready(function () {
+        if (jQuery.cookies.get("lang_type")) {
+            $("#code_type").val(jQuery.cookies.get("lang_type"));
+        }
+        $('#to_html').cookieFill(cookieOptions);
+        $('#gutter').cookieFill(cookieOptions);
+        if (jQuery.cookies.get("style_type")) {
+            $(":radio").removeAttr("checked");
+            $(":radio[value=" + jQuery.cookies.get("style_type") + "]").attr("checked", "checked");
+            change(jQuery.cookies.get("style_type"));
+        }
+        $("#html_div").hide();
+        SyntaxHighlighter.all();
+        $(":radio").click(function () {
+            change($(this).val());
+        });
+        $("#to_html").click(function () {
+            if ($("#to_html").attr("checked")) {
+                toHTML();
+                $("#html_div").show();
+            }
+            else {
+                $("#html_div").hide();
+            }
+        });
+        $("#gutter").click(function () {
+            render();
+        });
+        $("#syntaxhh").popover({
+            title: "SyntaxHighLighter",
+            content: "SyntaxHighlighter是一套在浏览器上对各种代码进行语法着色的独立 JavaScript库。",
+            placement: "bottom"
+        });
+        $('#to_html').cookieBind();
+        $('#gutter').cookieBind();
+    });
+
+    function render() {
+        $("#result_div").empty();
+        $("#result_div").prepend("<pre>" + encodeHtml($("#code_source").val()) + "</pre>");
+        var class_v = "brush :" + $("#code_type").val() + ";";
+        if ("checked" != $("#gutter").attr("checked"))
+            class_v = class_v + "gutter: false;";
+        $("#result_div pre").addClass(class_v);
+        SyntaxHighlighter.highlight();
+        toHTML();
+        jQuery.cookies.set("style_type", $(':radio[checked="checked"]').val(), cookieOptions);
+        jQuery.cookies.set("lang_type", $('#code_type').val(), cookieOptions);
+    }
+    function toHTML() {
+        var html = "<link rel='stylesheet' type='text/css' href='";
+        html = html + $("#css").attr("href");
+        html = html + "'/>";
+        html = html + $(".syntaxhighlighter").parent().html();
+        $("#html_div textarea").val(html);
+        if ($("#to_html").attr("checked")) {
+            $("#html_div").show();
+        }
+        else {
+            $("#html_div").hide();
+        }
+    }
+</script>
+<div id="mainContent" class="tool_content wrapper">
+    <div class="toolName">在线代码着色(采用<a id="syntaxhh" href="http://www.oschina.net/p/syntaxhighlighter"
+                                      data-original-title="">SyntaxHighlighter</a>实现)</div>
+    <div class="toolUsing clearfix">
+    </div>
+    <div class="topBar">
+        <textarea id="code_source">
+    function echo (){
+
+        var a="this is a example";
+
+        alert("hello world "+a);
+
+    }
+        </textarea>
+    </div>
+    <div class="operateTB">
+        <form class="form-inline">
+            <select id="code_type" class="span2">
+                <option value="js">Javascript</option>
+                <option value="xml">HTML/XML</option>
+                <option value="java">Java</option>
+                <option value="c">C/C++/Objectiv-C</option>
+                <option value="ruby">Ruby</option>
+                <option value="csharp">C#</option>
+                <option value="css">CSS</option>
+                <option value="delphi">Delphi</option>
+                <option value="erlang">Erlang</option>
+                <option value="groovy">Groovy</option>
+                <option value="javafx">JavaFX</option>
+                <option value="perl">Perl</option>
+                <option value="php">PHP</option>
+                <option value="powershell">PowerShell</option>
+                <option value="python">Python</option>
+                <option value="scala">Scala</option>
+                <option value="sql">SQL</option>
+                <option value="vb">VB</option>
+                <option value="as3">AS3</option>
+                <option value="bash">Bash</option>
+                <option value="coldfusion">ColdFusion</option>
+                <option value="diff">Diff</option>
+                <option value="plain">Plain</option>
+                <option value="sass">Sass</option>
+            </select>
+            <label class="checkbox"><input type="checkbox" id="gutter" checked="checked">显示行号</label>
+            <label class="checkbox"><input type="checkbox" id="to_html">生成HTML</label>
+            <button type="button" class="btn btn-primary" onclick="render();"><i
+                    class="icon-chevron-down icon-white"></i>语法着色
+            </button>
+            <p>
+                <label class="radio"><input type="radio" name="higilight_style" value="default"
+                                            checked="checked">默认样式</label>
+                <label class="radio"><input type="radio" name="higilight_style" value="emacs">Emacs样式</label>
+                <label class="radio"><input type="radio" name="higilight_style" value="eclipse">Eclipse样式</label>
+                <label class="radio"><input type="radio" name="higilight_style" value="django">Django样式</label>
+                <label class="radio"><input type="radio" name="higilight_style" value="fadetogrey">FadeToGrey样式</label>
+                <label class="radio"><input type="radio" name="higilight_style" value="mdultra">MDUltra样式</label>
+                <label class="radio"><input type="radio" name="higilight_style" value="midnight">Midnight样式</label>
+                <label class="radio"><input type="radio" name="higilight_style" value="rdark">RDark样式</label>
+            </p></form>
+    </div>
+    <div class="bottomBar clearfix">
+        <div id="html_div" style="display: block;">
+            <textarea id="html" onclick="this.focus();this.select();"> </textarea>
+        </div>
+        <div id="result_div">
+            <div>
+                <div id="highlighter_229164" class="syntaxhighlighter nogutter  js">
+                    <div class="toolbar"><span><a href="http://tool.oschina.net/highlight#"
+                                                  class="toolbar_item command_help help">?</a></span></div>
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                        <tr>
+                            <td class="code">
+                                <div class="container">
+                                    <div class="line number1 index0 alt2"><code class="js comments">/*&nbsp;---示例代码----*/</code>
+                                    </div>
+                                    <div class="line number2 index1 alt1">&nbsp;</div>
+                                    <div class="line number3 index2 alt2"><code class="js keyword">function</code>&nbsp;<code
+                                            class="js plain">echo&nbsp;(){</code></div>
+                                    <div class="line number4 index3 alt1">&nbsp;</div>
+                                    <div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                            class="js keyword">var</code>&nbsp;<code class="js plain">a=</code><code
+                                            class="js string">"this&nbsp;is&nbsp;a&nbsp;example"</code><code
+                                            class="js plain">;</code></div>
+                                    <div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;
+                                    </div>
+                                    <div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                            class="js plain">alert(</code><code class="js string">"hello&nbsp;world&nbsp;"</code><code
+                                            class="js plain">+a);</code></div>
+                                    <div class="line number8 index7 alt1">&nbsp;</div>
+                                    <div class="line number9 index8 alt2"><code class="js plain">}</code></div>
+                                    <div class="line number10 index9 alt1">&nbsp;</div>
+                                    <div class="line number11 index10 alt2"><code class="js comments">/*&nbsp;---示例代码----*/</code>
+                                    </div>
+                                    <div class="line number12 index11 alt1"><code class="js spaces">
+                                        &nbsp;&nbsp;&nbsp;</code>&nbsp;</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

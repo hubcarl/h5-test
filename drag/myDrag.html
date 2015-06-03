@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="./css/app.css" rel="stylesheet" type="text/css">
+    <script src="./css/Sortable.js"></script>
+</head>
+<body>
+<div class="container">
+    <div id="multi">
+        <div>
+            <div data-force="5" class="layer title title_xl">Multi</div>
+        </div>
+
+        <div class="layer tile" data-force="30">
+            <div class="tile__name">Group A</div>
+            <div class="tile__list">
+                <img src="./css/face-01.jpg"><!--
+					--><img src="./css/face-02.jpg"><!--
+					--><img src="./css/face-03.jpg"><!--
+					--><img src="./css/face-04.jpg">
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+<script>
+    (function () {
+        [].forEach.call(multi.getElementsByClassName('tile__list'), function (el) {
+            Sortable.create(el, {
+                group: 'photo',
+                animation: 150
+            });
+        });
+    })();
+</script>
+</html>
