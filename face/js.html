@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        方式一： var  obj ＝ new Object();
+        方式二： var  user ＝ {} ;  user.name='carl';
+        方式三： 通过定义function ，javascript中方法也是对象
+        function User(name){ this.name = name;}    var user = new User('carl');
+        方式四：原型继承
+        User.prototype.age = 26;
+        User.prototype.toString= function(){
+            return 'name:' + this.name + '  age:' + this.age;
+        };
+        var user = new User('sky');
+        console.log(user.toString{});
+
+        方法五：工厂模式
+        function createUser(name, age) {
+            var user = new Object();
+            user.name = name;
+            user.age = age;
+            user.print= function() {
+                console.log('name:' +name + ' age:' + age);
+            }
+            return user;
+        }
+
+        var user = createUser('carl', '26');
+    </script>
+</head>
+<body>
+Grunt和 Gulp 都是基于Node.js 平台的构建工具。Grunt功能非常强大，插件也非常多，可以通过组合各种插件完成不同的任务，有一定的学习成本。
+Gulp相比Grunt 使用简单，对外开放的主要有5个命令。
+都是基于任务定义来实现构建：
+Gulp是一个代码驱动的构建工具，与Grunt的声明式定义任务相反，它的任务定义更容易阅读一点。
+都是通过插件机制进行构建：
+Grunt通过NPM包来管理插件, Gulp也有类似于npm run的东西，因为它使用Node Stream来转化输入输出。
+Gulp构建效率比Grunt快：
+Grunt的任务将从磁盘中读取，再写入到磁盘，这样会生成中间文件，如果你的多个任务需要操作同一个文件，那么该文件很有可能被从磁盘中多次读取，导致编译时间长。
+Gulp没有Grunt那种磁盘密集型I/O操作的问题， Gulp 通过管道（流）对文件进行操作，这也是它比Grunp更快的原因，更少的时间花在I/O上面。
+Gulp的主要缺点是它在很大程度上依赖于流，管道和异步代码。特别是在自己构建gulp插件时会遇到流处理的相关问题。
+
+参考：https://www.npmjs.com/package/gulp-angular-protractor  和  https://github.com/mllrsohn/gulp-protractor
+
+盒子模型
+
+css盒子模型分为两种，一种是遵循w3c标准的标准盒子模型，另外一种就是IE盒子模型。
+两种盒子模型都包括margin(top right bottom left)，padding(top right bottom left)，border(top right bottom left)，content，但是ie盒子模型的content包括border和padding
+IE默认ie盒子模型，若想IE采用w3c模型 在网页头部声明
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+行内元素不可以设置宽（width）和高（height），但可以与其他行内元素位于同一行，行内元素内一般不可以包含块级元素。行内元素的高度一般由元素内部的字体大小决定，宽度由内容的长度控制。常见的行内元素span, a, strong等。
+
+块级元素排斥其他元素与其位于同一行，可以设定元素的宽（width）和高（height），块级元素一般是其他元素的容器，可容纳块级元素和行内元素。常见的块级元素有div, p ,h1~h6等。
+
+块级元素和行内元素区别:
+1.行内元素同一行水平排列。
+2.块级元素各占据一行，垂直方向排列。
+3.块级元素可以包含行内元素和块级元素。但行内元素不能包含块级元素。
+4.行内元素与块级元素属性的不同，主要是盒模型属性上。
+5.行内元素设置width无效，height无效(可以设置line-height)，margin上下无效，padding上下无效
+6.可以通过修改样式display属性改变元素是以块级还是行内元素呈现，当display的值设为block时，元素将以块级方式呈现；当display值设为inline时，元素将以行内形式呈现。
+
+如果想让一个元素可以设置宽度高度，又让它以行内形式显示，我们可以设置display的值为inline-block。
+
+
+
+优雅降级指的是一开始就按照完美预想实现，然后先在主流的浏览器中测试实现功能，最后在老一点版本，不常用的版本中测试实现，如果不能完全达到我们的要求，这时我们的原则是尽量去实现，如果还是没办法，那就适当减少功能，在这个过程中，我们可能会用到特性检测（特性检测指的是测试浏览器是否支持某个特性或者方法）；
+渐进增强指的是在最初的时候先实现基本的功能，然后在今后的版本中逐步增加功能，主要强调的是内容的趋于完善。
+优雅降级强调往回看，渐近增强指的是往前看，不过二者都是要保证最基本的功能要实现
+
+
+优雅降级的例子：
+
+1.例如前端要做性能优化时，采用localstorage进行数据缓存，如果支持就采用localstorage优先从缓存里面取，如果不支持，直接从服务器取。
+
+2.Iscroll 在做滚动处理首先判断是否支持css transform形变和css transition变换 如果支持滚动采用transform和transition 动画效果，也支持参数设置是否开启
+
+3.假如你写了一个表单，没有用到<input type="submit">表单元素，用了一个<a>标签的click事件做提交，但如果Javascript被禁用了怎么办？
+    使用如下的文档结构，就可以在javascript被禁用时，依然可以提交。
+
+    <form>
+        <input type="text">
+        <input type="submit">
+    </form>
+    优雅降级需要正确地体现HTML标签的语义，符合“浏览器的预期”。让你的网页在各种情况—下——包括降级（javascript被禁用，css传输失败等等）的情形都可以运作良好。这是我理解的优雅降级的意义。
+
+
+渐进增强的例子：
+
+    transition属性，用于在某个数值属性突然改变的时候，在一定时间段里面输出中间的值，类似于jQuery.animate实现的动态效果。
+    使用jQuery.animate做动画的时候，是全浏览器兼容的，对于渲染效率低下、时不时有重绘bug的IE6、IE7，只会造成“页面卡”的感觉，并不会因此增强用户体验，若使用transition属性来做动画，则IE6~9是瞬间变化（并不会造成任何布局上的问题），而现代浏览器则是匀变。
+
+
+    <div style="float: left;width: 200px; background-color: green;">Left</div>
+    <div style="background-color: orange;margin-left: 200px;">right</div>
+    <!--IE7 无效-->
+    <div style="display: table;width: 100%">
+        <div style="width:200px;display: table-cell;background-color: red">Left</div>
+        <div style="display: table-cell;background-color: blue">right</div>
+    </div>
+    css多行文本省略号是无法实现的，即使能实现，兼容性也有问题。当然可以通过特殊手段（javascript根据容器宽度和字体占用宽度计算字符个数，然后进行截取实现或者引入第三方CSS Ellipsis库）可以达到这种效果。
+    line-height、height，overflow实现两行效果
+    <div style="width: 200px;line-height: 18px; text-overflow: ellipsis; height: 36px;overflow: hidden;background-color: #00aced;color: white">
+        css 实现两行css实现两行css实现两行css实现两行css实现两行css实现两行css实现两行css实现两行css实现两行css实现两行css实现两行
+    </div>
+    webkit内核浏览器才支持 比如safari和chrome 可以实现css多行文本省略号
+    通过text-overflow: -o-ellipsis-lastline;display: -webkit-box;-webkit-line-clamp:2; -webkit-box-orient: vertical，overflow实现两行省略号
+    <div style="-o-text-overflow: ellipsis;text-overflow: ellipsis;width: 200px;display: -webkit-box;-webkit-line-clamp:2; -webkit-box-orient: vertical;overflow: hidden;background-color: #00aced;color: white">
+        css 实现两行css实现两行css实现两行css实现两行css实现两行css实现两行css实现两行css实现两行css实现两行css实现两行css实现两行
+    </div>
+    多行文本省略号css实现参考，要下载一个CSS Ellipsis库（浏览器支持：Safari 5.0, IE 9 (must be in standards mode), Opera 12 and Firefox 15.）
+    http://www.mobify.com/blog/multiline-ellipsis-in-pure-css/
+
+
+   在进行打包发布时， 根据文件属性生成唯一的文件名签名。当文件修改后，再次打包时，更改文件名。
+   比如有a.js b.js c.js 文件，进行打包发布，生成md5签名文件名 变成 a_3de45.js  b.3ghj3.js   c.289hj1.js 如果文件a.js修改了，再次打包变成 a_8kl05.js  b.3ghj3.js   c.289hj1.js 其中只有a.js的文件名发生变化，b和c不变。 静态资源增量发布，这样就能解决版本更新时静态资源引用问题。
+   目前grunt/fis/gulp 都有对应的插件实现文件名md5签名功能。
+
+
+    1) 多分支开发，分支又需要合并，便于历史提交回溯而且又需要清晰的显示提交的先后顺序（时间线是一条直线）建议使用 git pull －－rebase
+    2) 分支策略
+
+    1. Master
+
+    顾名思义，既然名字叫Master，那么该分支就是主分支的意思。在git repo下主分支的职责主要就是负责记录stable版本的迭代，当在beta版本的项目或是开发版本的项目得到了充分的验证之后，我才能将分支并入master分支。master分支永远是production-ready的状态，即稳定可产品化发布的状态。
+
+    2. Develop
+
+    这个分支就是我们平常开发的一个主要分支了，不管是要做新的feature还是需要做bug fix，都是从这个分支分出来做。在这个分支下主要负责记录开发状态下相对稳定的版本，即完成了某个feature或者修复了某个bug后的开发稳定版本。
+
+    3. Feature branches
+
+    这是由许多分别负责不同feature开发的分支组成的一个分支系列。new feature主要就在这个分支系列下进行开发。当我在一个大的develop的迭代之下，往往我们会把每一个迭代分成很多个功能点，并将功能点分派给不同人的人员去开发。每一个人员开发的功能点就会形成一个feature分支，当功能点开发测试完毕之后，就会合并到develop分支去。
+
+    4. release branches
+
+    同样，这也是有多个分支组成的一个分支系列。这个分支系列从develop分支出来，也就是预发分支。在预发状态下，我们往往会进行预发环境下的测试，如果出现缺陷，那么就在该release分支下进行修复，修复完毕测试通过后，即分别并入master分支后develop分支。
+
+    5. Hotfix branches
+
+    这个分支系列也就是我们常说的紧急线上修复，当线上出现bug且特别紧急的时候，就可以从master拉出分支到这里进行修复，修复完成后分别并入master和develop分支。
+
+
+
+    1. 首先进入商品详情页面，判断库存是否还有，如果有加入购物车按钮可点
+    2. 点击加入购物车按钮时检查是否选择了尺寸／数量等信息，然后判断用户是否登陆
+    3. 如果已登陆，把商品加入购物车，否则跳转到登陆界面，登陆成功后跳转到商品详情页面
+    4. 当用户去购物车结算时，校验库存是否足够
+</body>
+</html>
